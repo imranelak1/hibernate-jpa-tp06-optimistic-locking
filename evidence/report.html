@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TP 6 : Simuler un conflit de réservation concurrent et démontrer l&#x27;optimistic locking avec @Version — Résultats</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #faf8f5; color: #292524; font: 15px/1.55 "Consolas", monospace; }
+main { max-width: 1180px; margin: 0 auto; padding: 32px; }
+header { border-bottom: 1px solid #d6d3d1; padding-bottom: 16px; margin-bottom: 24px; }
+h1 { font-size: 24px; line-height: 1.35; margin: 0 0 8px; }
+h2 { font-size: 18px; margin: 0 0 12px; }
+p { margin: 8px 0; } a { color: #805015; }
+section { background: #ffffff; border: 1px solid #d6d3d1; padding: 24px; margin: 0 0 24px; }
+pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.65 "Consolas", monospace; }
+table { border-collapse: collapse; width: 100%; }
+th,td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e7e5e4; vertical-align: top; }
+th { font-weight: 600; } td span { color: #57534e; font-size: 12px; }
+td:nth-child(2) { color: #365314; white-space: nowrap; }
+.note { color: #57534e; font-size: 13px; }
+ul { padding-left: 20px; } li { margin: 12px 0; } code { display: block; overflow-wrap: anywhere; font-size: 11px; }
+</style></head><body><main>
+<header><h1>TP 6 : Simuler un conflit de réservation concurrent et démontrer l&#x27;optimistic locking avec @Version</h1><p>MLIAEdu · Hibernate &amp; JPA · Lab 149</p><p>8 tests · 0 échecs · 0 erreurs · 0 ignorés</p></header>
+<section id="results"><h2>Résultats de la démonstration</h2><p class="note">Extrait exact de la sortie de l'application; les logs techniques complets sont dans <a href="demo-output.txt">demo-output.txt</a>.</p><pre>=== TP06 - Verrouillage optimiste et retry ===
+Deux EntityManagers distincts lisent la version 0 et 0
+Transaction 1: commit Salle B, version=1
+Transaction 2: OptimisticLockException detectee; rollback termine
+Lecture apres rollback: Salle B, version=1; gagnant conserve
+Snapshots detaches: gagnant Salle B version=1; snapshot obsolete version=0
+Conflit detecte: rechargement et retry 1/2
+Retry reussi: Salle C, fin=2024-06-02T12:00, version=2
+Liste finale: 2 reservations
+RESULTAT: conflit reel detecte, rollback confirme, retry conserve Salle C et sa nouvelle date; version 0 -&gt; 1 -&gt; 2.</pre></section>
+<section id="tests"><h2>Tests de persistance</h2><p>8 tests · 0 échecs · 0 erreurs · 0 ignorés</p><table><thead><tr><th>Scénario / classe</th><th>Résultat</th><th>Durée mesurée</th></tr></thead><tbody><tr><td>staleDetachedSnapshotCannotOverwriteWinnerAndServiceRecovers<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.92 s</td></tr><tr><td>recognizesOptimisticExceptionWrappedByCommit<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.036 s</td></tr><tr><td>retryReloadsVersionAndPreservesRequestedRoomAndDates<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.04 s</td></tr><tr><td>createsLoadsListsAndIncrementsVersionOnUpdate<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.095 s</td></tr><tr><td>retryFailsExplicitlyWhenReservationDisappears<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.028 s</td></tr><tr><td>twoIndependentEntityManagersRejectSecondWriterAndRollback<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.034 s</td></tr><tr><td>validatesRequiredFieldsIntervalsAndRetryBound<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.028 s</td></tr><tr><td>retryStopsAtConfiguredBoundAndPropagatesConflict<br><span>com.example.OptimisticLockingTest</span></td><td>Réussi</td><td>0.029 s</td></tr></tbody></table><p class="note">Données lues directement dans les fichiers XML Surefire de cette exécution.</p><pre>[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.226 s -- in com.example.OptimisticLockingTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Finished at: 2026-10-11T11:56:16+01:00</pre></section>
+<section><h2>Sources et intégrité</h2><p class="note">Capture navigateur de résultats réellement exécutés. Chaque fichier source est conservé avec son SHA-256; les durées peuvent varier lors d'une nouvelle exécution.</p><ul><li><a href="conflict-output.txt">conflict-output.txt</a> <code>059fdbea26f96badd05d51b1ef61c33fd459fba44f223b2b4958ebfbe2447fd2</code></li><li><a href="demo-output.txt">demo-output.txt</a> <code>284c08caa8d06bbe3dfe2324851877f59dceff56cd6eba6b41c98de95b726337</code></li><li><a href="package-output.txt">package-output.txt</a> <code>084ef049a5292134fcfd96531e582237a9d4603bb3ff5511d29fbb167dd96dd0</code></li><li><a href="retry-output.txt">retry-output.txt</a> <code>eda864c71207c260a2421e4b24daff9b43dd1affe37a9b9b5aa0bf0e8b47f4af</code></li><li><a href="test-output.txt">test-output.txt</a> <code>3aec36bea4274b4cd6a3fc7db579fd3d5a1cffd990d38ea7059c1dc11b639d29</code></li><li><a href="junit/TEST-com.example.OptimisticLockingTest.xml">junit/TEST-com.example.OptimisticLockingTest.xml</a> <code>36bf993678de6d2e0d229c4a5650da5ed1fc7a9fcec6744ee00bbbcb35d33aec</code></li></ul></section>
+</main></body></html>
