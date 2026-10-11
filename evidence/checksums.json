@@ -1,8 +1,0 @@
-{
-  "conflict-output.txt": "059fdbea26f96badd05d51b1ef61c33fd459fba44f223b2b4958ebfbe2447fd2",
-  "demo-output.txt": "284c08caa8d06bbe3dfe2324851877f59dceff56cd6eba6b41c98de95b726337",
-  "package-output.txt": "084ef049a5292134fcfd96531e582237a9d4603bb3ff5511d29fbb167dd96dd0",
-  "retry-output.txt": "eda864c71207c260a2421e4b24daff9b43dd1affe37a9b9b5aa0bf0e8b47f4af",
-  "test-output.txt": "3aec36bea4274b4cd6a3fc7db579fd3d5a1cffd990d38ea7059c1dc11b639d29",
-  "junit/TEST-com.example.OptimisticLockingTest.xml": "36bf993678de6d2e0d229c4a5650da5ed1fc7a9fcec6744ee00bbbcb35d33aec"
-}

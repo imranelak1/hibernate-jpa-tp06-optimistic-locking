@@ -11,7 +11,7 @@ mvn exec:java
 
 Dans la démo, Salle B est enregistrée en version 1 et la modification concurrente est refusée. La reprise enregistre ensuite Salle C avec la nouvelle date en version 2. Les 8 tests passent.
 
-Les captures montrent le rapport des résultats. Les sorties d'exécution sont dans `evidence/`.
+Les captures de la démo et des tests viennent d’exécutions réelles dans le terminal. Les sorties d'exécution sont dans `evidence/`.
 
 ![Conflit et reprise](screenshots/results.png)
 
